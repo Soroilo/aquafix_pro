@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AquaFix Pro - Plataforma profesional de servicios de fontanería con geolocalización en tiempo real">
+    <meta name="keywords" content="fontanería, plomería, reparaciones, emergencias, instalaciones, Bogotá">
+    <meta name="author" content="AquaFix Pro">
+    <title>AquaFix Pro - Servicios de Fontanería con Mashups</title>
+    
+    <!-- CSS Externo -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <nav>
+            <div class="logo">AquaFix Pro</div>
+            <button class="menu-toggle" aria-label="Menú de navegación">☰</button>
+            <ul class="nav-menu">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#clima">Clima</a></li>
+                <li><a href="#mapa">Mapa</a></li>
+                <li><a href="#fontaneros">Fontaneros</a></li>
+                <li><a href="#notificaciones">Notificaciones</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1>🚀 AquaFix Pro - Mashups Integrados</h1>
+            <p class="hero-description">
+                Geolocalización en tiempo real • Información climática • Notificaciones automáticas
+            </p>
+            <div class="cta-buttons">
+                <a href="#fontaneros" class="btn btn-primary">Ver Fontaneros</a>
+                <a href="#notificaciones" class="btn btn-secondary">Solicitar Servicio</a>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <!-- MASHUP 1: WEATHER API -->
+        <section id="clima" class="section-spacing">
+            <h2 class="section-title">☁️ Información Climática en Tiempo Real</h2>
+            
+            <article class="weather-widget" id="weatherWidget">
+                <div class="weather-info">
+                    <div class="weather-icon" id="weatherIcon" aria-label="Icono del clima">⏳</div>
+                    <div class="weather-main">
+                        <div class="weather-temp" id="weatherTemp">--°C</div>
+                        <div class="weather-description" id="weatherDescription">Cargando...</div>
+                        <div class="weather-location">
+                            📍 <span id="weatherCity">Bogotá, CO</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="weather-details">
+                    <div class="weather-detail-item">
+                        <span class="detail-icon">💧</span>
+                        <span class="detail-label">Humedad:</span>
+                        <strong id="weatherHumidity">--%</strong>
+                    </div>
+                    <div class="weather-detail-item">
+                        <span class="detail-icon">💨</span>
+                        <span class="detail-label">Viento:</span>
+                        <strong id="weatherWind">-- km/h</strong>
+                    </div>
+                    <div class="weather-detail-item">
+                        <span class="detail-icon">🌡️</span>
+                        <span class="detail-label">Sensación:</span>
+                        <strong id="weatherFeels">--°C</strong>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- MASHUP 2: GOOGLE MAPS API -->
+        <section id="mapa" class="map-section section-spacing">
+            <h2 class="section-title">🗺️ Localización de Fontaneros</h2>
+            <p class="section-subtitle">Mashup con Google Maps JavaScript API</p>
+            
+            <div class="map-controls">
+                <button class="btn btn-primary" onclick="centrarMapa()" aria-label="Centrar mapa en mi ubicación">
+                    📍 Mi Ubicación
+                </button>
+                <button class="btn btn-secondary" onclick="mostrarFontaneros()" aria-label="Mostrar fontaneros cercanos">
+                    👷 Ver Fontaneros Cercanos
+                </button>
+                <button class="btn btn-success" onclick="calcularRuta()" aria-label="Calcular ruta al fontanero">
+                    🚗 Calcular Ruta
+                </button>
+            </div>
+            
+            <div id="map" role="application" aria-label="Mapa de ubicación de fontaneros"></div>
+        </section>
+
+        <!-- LISTADO DE FONTANEROS -->
+        <section id="fontaneros" class="section-spacing">
+            <h2 class="section-title">👷 Fontaneros Disponibles</h2>
+            <p class="section-subtitle">Con distancia calculada en tiempo real usando geolocalización</p>
+            
+            <div class="plumbers-grid" id="plumbersGrid">
+                <!-- Los fontaneros se cargarán dinámicamente con JavaScript -->
+            </div>
+        </section>
+
+        <!-- MASHUP 3: EMAILJS NOTIFICATIONS -->
+        <section id="notificaciones" class="notification-section section-spacing">
+            <h2 class="section-title">📧 Sistema de Notificaciones</h2>
+            <p class="section-subtitle">Mashup con EmailJS API para envío de notificaciones automáticas</p>
+            
+            <!-- Alertas -->
+            <div class="alert alert-success" id="successAlert" role="alert">
+                ✅ Notificación enviada exitosamente!
+            </div>
+            <div class="alert alert-error" id="errorAlert" role="alert">
+                ❌ Error al enviar notificación. Inténtalo nuevamente.
+            </div>
+            
+            <!-- Formulario de notificación -->
+            <form id="notificationForm" class="notification-form">
+                <div class="form-group">
+                    <label for="userEmail">Tu Email: *</label>
+                    <input 
+                        type="email" 
+                        id="userEmail" 
+                        name="userEmail"
+                        placeholder="tu@email.com" 
+                        required
+                        aria-required="true"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="userName">Tu Nombre Completo: *</label>
+                    <input 
+                        type="text" 
+                        id="userName" 
+                        name="userName"
+                        placeholder="Juan Pérez" 
+                        required
+                        aria-required="true"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="userPhone">Tu Teléfono: *</label>
+                    <input 
+                        type="tel" 
+                        id="userPhone" 
+                        name="userPhone"
+                        placeholder="+57 300 123 4567" 
+                        required
+                        aria-required="true"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="serviceType">Tipo de Servicio: *</label>
+                    <select id="serviceType" name="serviceType" required aria-required="true">
+                        <option value="">-- Selecciona un servicio --</option>
+                        <option value="Reparación de Fuga">🔧 Reparación de Fuga</option>
+                        <option value="Instalación de Lavabo">🚰 Instalación de Lavabo</option>
+                        <option value="Emergencia 24/7">🚨 Emergencia 24/7</option>
+                        <option value="Mantenimiento">🔍 Mantenimiento Preventivo</option>
+                        <option value="Destape de Drenaje">⚡ Destape de Drenaje</option>
+                        <option value="Instalación de Inodoro">🚽 Instalación de Inodoro</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Descripción del Problema: *</label>
+                    <textarea 
+                        id="message" 
+                        name="message"
+                        rows="5" 
+                        placeholder="Describe detalladamente el problema que necesitas resolver..."
+                        required
+                        aria-required="true"
+                    ></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-full">
+                    📧 Enviar Solicitud de Servicio
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AquaFix Pro</h3>
+                <p>Plataforma profesional de servicios de fontanería con tecnología de vanguardia.</p>
+                <p><strong>Mashups Integrados:</strong></p>
+                <ul class="mashup-list">
+                    <li>☁️ OpenWeatherMap API</li>
+                    <li>🗺️ Google Maps API</li>
+                    <li>📧 EmailJS API</li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <ul class="contact-list">
+                    <li>📞 Teléfono: +57 (1) 555-0100</li>
+                    <li>📧 Email: info@aquafixpro.com</li>
+                    <li>📍 Bogotá, Colombia</li>
+                    <li>🕐 Disponible 24/7</li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="#clima">Clima en Tiempo Real</a></li>
+                    <li><a href="#mapa">Mapa de Fontaneros</a></li>
+                    <li><a href="#fontaneros">Ver Fontaneros</a></li>
+                    <li><a href="#notificaciones">Solicitar Servicio</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 AquaFix Pro. Todos los derechos reservados.</p>
+            <p class="tech-info">Desarrollado con HTML5, CSS3, JavaScript ES6+ y APIs externas</p>
+        </div>
+    </footer>
+    <!-- JavaScript Externo -->
+    <script src="script.js"></script>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDm1gOwq5hZeSmF5vGpxzdWZa1k-g8ocyI&callback=initMap">
+    </script>
+
+</body>
+</html>
