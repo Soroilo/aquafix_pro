@@ -1,0 +1,32 @@
+# CodeIgniter
+application/cache/*
+application/logs/*
+!application/cache/.htaccess
+!application/logs/.htaccess
+
+# Composer
+/vendor/
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Configuración local
+application/config/database.php
+application/config/config.php
+
+# Archivos temporales
+*.tmp
+*.bak
+*.swp
+*~
+
+# Uploads
+uploads/*
+!uploads/.htaccess
